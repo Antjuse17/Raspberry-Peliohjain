@@ -21,7 +21,6 @@ import json
 import serial
 ser = serial.Serial('/dev/ttyGS0')
 ser.baudrate = 115200
-print(ser.name)
 import cv2
 import mediapipe as mp
 import numpy as np
