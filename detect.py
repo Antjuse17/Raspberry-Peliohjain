@@ -18,6 +18,10 @@ import sys
 import time
 import json
 
+import serial
+ser = serial.Serial('/dev/ttyGS0')
+ser.baudrate = 115200
+print(ser.name)
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -39,14 +43,15 @@ START_TIME = time.time()
 DETECTION_RESULT = None
 
 def tuloste(name1, name2, index, lista):
-  print('{{'.format())
-  print('   {0}: {{'.format(name1))
-  print('          {0}: {{'.format(name2))
-  print(f'                 x: {lista[index].x}')
-  print(f'                 y: {lista[index].y}')
-  print('                }}'.format())
-  print('          }}'.format())
-  print(' }}'.format())
+    ser.write('{{'.encode())
+    ser.write('   {0}: {{'.format(name1).encode())
+    ser.write('          {0}: {{'.format(name2).encode())
+    ser.write(f'                 x: {lista[index].x}'.encode())
+    ser.write(f'                 y: {lista[index].y}'.encode())
+    ser.write('                }}'.encode())
+    ser.write('          }}'.encode())
+    ser.write(' }}'.encode())
+
 
 def run(model: str, num_poses: int,
         min_pose_detection_confidence: float,
@@ -147,42 +152,42 @@ def run(model: str, num_poses: int,
             print("*********************")
             #https://developers.google.com/mediapipe/solutions/vision/pose_landmarker
             try:
-                tuloste("upper_body", "nose", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body", "left_eye_inner", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body", "left_eye", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body", "left_eye_outer", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body", "right_eye_inner", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body", "right_eye", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body", "right_eye_outer", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body", "left_ear", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body", "right_ear", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body", "mouth_left", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body", "mouth_right", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body_joint", "left_shoulder", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body_joint", "right_shoulder", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body_joint", "left_elbow", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body_joint", "right_elbow", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_bod_jointy", "left_wrist", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("upper_body_joint", "right_wrist", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("hands", "left_pinky", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("hands", "right_pinky", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("hands", "left_index", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("hands", "right_index", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("hands", "left_thumb", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("hands", "right_thumb", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("lower_body", "left_hip", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("lower_body", "right_hip", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("lower_body", "left_knee", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("lower_body", "right_knee", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("lower_body", "left_ankle", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("lower_body", "right_ankle", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("feet", "left_heel", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("feet", "right_heel", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("feet", "left_foot_index", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
-                tuloste("feet", "right_foot_index", 0,DETECTION_RESULT.pose_landmarks.landmark._values)
+                tuloste("upper_body", "nose", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body", "left_eye_inner", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body", "left_eye", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body", "left_eye_outer", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body", "right_eye_inner", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body", "right_eye", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body", "right_eye_outer", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body", "left_ear", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body", "right_ear", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body", "mouth_left", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body", "mouth_right", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body_joint", "left_shoulder", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body_joint", "right_shoulder", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body_joint", "left_elbow", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body_joint", "right_elbow", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_bod_jointy", "left_wrist", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("upper_body_joint", "right_wrist", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("hands", "left_pinky", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("hands", "right_pinky", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("hands", "left_index", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("hands", "right_index", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("hands", "left_thumb", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("hands", "right_thumb", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("lower_body", "left_hip", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("lower_body", "right_hip", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("lower_body", "left_knee", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("lower_body", "right_knee", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("lower_body", "left_ankle", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("lower_body", "right_ankle", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("feet", "left_heel", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("feet", "right_heel", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("feet", "left_foot_index", 0,DETECTION_RESULT.pose_landmarks.landmark)
+                tuloste("feet", "right_foot_index", 0,DETECTION_RESULT.pose_landmarks.landmark)
             except Exception as error :
                 print(f"ERR {error}")
-            print(DETECTION_RESULT.pose_landmarks.landmark._values())
+            print(DETECTION_RESULT.pose_landmarks.landmark())
             print("*********************")
             
             for pose_landmarks in DETECTION_RESULT.pose_landmarks:
